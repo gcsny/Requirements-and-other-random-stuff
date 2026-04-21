@@ -1,0 +1,103 @@
+
+
+ 
+Document History
+Version	Date	Author	Comments
+0.1	7/31/24	Unisys	Initial Template
+0.2	02/03/2026	Brandon Hanshew	Initial Functional Requirements Doc
+			
+			
+
+ 
+1	USE CASE OVERVIEW
+Issue:
+Incident- and request-related email notifications generate excessive, low-value email traffic, resulting in user fatigue, reduced visibility of meaningful updates, and increased reliance on the service desk to interpret status or required actions.
+
+Several notifications have been identified as “heavy hitters” that contribute little actionable value, while others would be better suited to consolidated, digest-style communications rather than immediate individual emails.
+1	 USE CASES
+End users and IT users receive multiple emails for routine task and request updates (assignments, work notes, opened-on-behalf activity, etc.). Due to volume and inconsistent content clarity, important updates are often overlooked, misunderstood, or require follow-up calls to the service desk.
+
+The business wants to reduce email volume while improving the quality and clarity of communications, without negatively impacting operational workflows or user expectations.
+1.1	USE CASE 1 – INCIDENT EMAIL NOTIFICATION OPTIMIZATION
+Objective	Reduce overall notification email volume by removing low-value notifications.
+Consolidate selected high-volume notifications into digest-based summaries.
+Improve clarity and usefulness of email communications.
+Leverage ServiceNow native email digest capability where possible.
+Clearly document technical constraints and tradeoffs (e.g., reply-to-record behavior).
+
+Actors	ServiceNow Engineer, ServiceNow BA (Brandon Hanshew), Trevor Miller, Cara Cormier
+Requirements	Notification Removal:
+- Incident Closed
+- Catalog task worknoted (to assignee)
+- Incident worknoted for ITIL
+- RITM Open RequestedFor Notification
+
+Digest-Enabled Notifications:
+- Email assigned to group (sc_task)
+- Email assigned to (sc_task)
+- Request opened on behalf of
+
+Digest Content Requirements:
+Each digest item must include:
+- Record number
+- Short description
+- Relevant assignment or request context
+- Direct link to the record
+
+User Preference Behavior:
+- Digest delivery respects standard ServiceNow notification preferences.
+- Users without digest enabled continue receiving individual notifications.
+
+Reply-to-Record:
+- Ensure that any email response to the generated emails can be associated to the work notes of the appropriate record in the platform (note: this may not be possible with attempting to use a single email for digest of ALL incidents - that's OK. Stay within confines of what we can do).
+- If reply-to-record is not feasible for digest emails, users must be directed to update records in-platform.
+
+Acceptance Criteria	•	Identified notifications no longer send emails in production.
+•	Digest-enabled notifications expose a digest option in user preferences.
+•	Users who enable digest receive consolidated emails.
+•	Digest emails include required context and working links.
+•	Users who do not enable digest experience no behavior change.
+•	Platform limitations are documented and approved.
+Notes	Reference link: https://www.servicenow.com/docs/r/yokohama/platform-administration/configure-email-digest.html
+
+Dev Notes/Implementation	Notification Deactivation:
+•	Disable notifications via Active flag or conditional logic.
+•	Confirm notifications are not reused elsewhere.
+Digest Configuration:
+•	Enable Allow Digest on selected notifications.
+•	Configure Digest Subject, Digest HTML, and Digest Separator.
+•	Optionally reuse an email template.
+Digest Frequency:
+•	Confirm acceptable cadence (daily/weekly).
+•	Native scheduling preferred unless custom cadence is required.
+Reply-to-Record Constraint:
+•	Multi-record digests cannot reliably support reply-to-record.
+•	Provide clear guidance and links directing users to update records directly in ServiceNow.
+Digest Configuration (Native)
+
+ServiceNow supports digest delivery directly on notification records.
+
+Implementation steps:
+•	Navigate to System Notification > Email > Notifications
+•	Open each digest-enabled notification
+•	Enable Allow Digest
+•	Configure the What Digest will contain tab:
+o	Digest Subject – meaningful, timeframe-aware subject
+o	Digest HTML – structured content with record variables
+o	Digest Separator (HTML) – clear visual separation between items
+o	Optional: reuse an email template for header/footer consistency
+
+Important behavior notes:
+•	Digest emails are generated only for users who:
+o	Are valid recipients per notification rules, and
+o	Have enabled digest in notification preferences
+•	If a user does not meet both conditions, individual notifications will still send.
+
+
+2	SIGN OFF
+Functional requirements must be signed off prior to development.
+Company	Name	Date	Signature
+Unisys sign off			
+Client sign off			
+
+
