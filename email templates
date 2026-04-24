@@ -1,0 +1,8 @@
+Short Description: ${short_description}
+Assignment group: ${assignment_group}
+Assigned to: ${assigned_to}
+Due date: ${due_date}
+Click here to view Task: ${mail_script:itsm_record_link}
+<hr/>
+
+Description: ${description}
