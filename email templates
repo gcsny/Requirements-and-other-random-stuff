@@ -6,3 +6,15 @@ Click here to view Task: ${mail_script:itsm_record_link}
 <hr/>
 
 Description: ${description}
+
+Request ${number} was registered for you and will be fulfilled as soon as possible.
+
+Click here to view Request: ${URI_REF}
+
+Requested For: ${requested_for.name}
+Due date: ${due_date}
+Opened: ${opened_at}
+Approval: ${approval}
+Includes the following items:
+
+${mail_script:request.general_script_1}
