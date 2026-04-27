@@ -1,0 +1,54 @@
+Digest Template Wrapper
+
+<p>Below is a summary of your recent activity in ServiceNow. Each item is listed with its details and a link to view the record directly.</p>
+
+<hr/>
+
+<p style="font-size: 12px; color: #666666;">
+  <strong>Note:</strong> Replies to this email cannot be associated to a specific record. To add comments or update a record, please use the link provided with each item above to visit ServiceNow directly.
+</p>
+
+
+
+ Email Assigned to Group (sc_task) — Digest HTML
+
+<p>
+  <strong>${number}</strong><br/>
+  Short Description: ${short_description}<br/>
+  Assignment group: ${assignment_group}<br/>
+  Assigned to: ${assigned_to}<br/>
+  Due date: ${due_date}<br/>
+  Click here to view Task: ${mail_script:itsm_record_link}
+</p>
+
+Digest Subject: Catalog Task Assignment Summary for Your Group - ${digest.date}
+Digest Separator: <hr/>
+
+3. Email Assigned To (sc_task) — Digest HTML
+
+<p>
+  <strong>${number}</strong><br/>
+  Short Description: ${short_description}<br/>
+  Assignment group: ${assignment_group}<br/>
+  Assigned to: ${assigned_to}<br/>
+  Due date: ${due_date}<br/>
+  Click here to view Task: ${mail_script:itsm_record_link}
+</p>
+
+Digest Subject: Your Task Assignment Summary - ${digest.date}
+Digest Separator: <hr/>
+
+
+4. Request Opened on Behalf Of — Digest HTML
+
+<p>
+  Request <strong>${number}</strong> was registered for you and will be fulfilled as soon as possible.<br/>
+  Click here to view Request: ${URI_REF}<br/>
+  Requested For: ${requested_for.name}<br/>
+  Due date: ${due_date}<br/>
+  Opened: ${opened_at}<br/>
+  Approval: ${approval}
+</p>
+
+Digest Subject: Summary of Requests Opened on Your Behalf - ${digest.date}
+Digest Separator: <hr/>
