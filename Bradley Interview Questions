@@ -1,0 +1,84 @@
+Bradley Pierre Interview Questions
+30-Minute Screen | ServiceNow Developer Role
+Running technique throughout: Every time he says "we built" or "we migrated," stop him and ask: "What did you personally write or configure on that?" This forces him from team-level achievement to individual competency. Use it relentlessly.
+
+1. You've mentioned creating record producers. What's the difference between a record producer and a regular catalog item, and when would you pick one over the other?
+Why first: Easy warm-up. Gets him talking, settles his nerves, and gives you a quick read on whether the CAD certification is real. A CAD holder should answer this without hesitation.
+
+What you're listening for: Record producers create records on any table (incident, change, custom tables, sys_user) and bypass the request and requested item layer. Regular catalog items create requested items and go through the standard request fulfillment process. Pick a record producer when you want a friendly form interface to create a record without fulfillment workflow overhead. Pick a catalog item when you need approvals, tasks, or fulfillment tracking. Should come out smoothly in under 90 seconds.
+
+
+Reframe if he struggles: "Just tell me about the last record producer you built. What table did it create records on, and why a record producer instead of a regular catalog item?"
+
+
+2. Walk me through the lifecycle of an update set from creation to production, including what you do when an update set has missing references or conflicts during a preview.
+Why second: Sole-admin on-prem means update set hygiene is the difference between a clean Tuesday and a production fire. Still a softball for any real developer, but specific enough to separate hands-on from hands-off.
+
+What you're listening for: Clear progression of dev to test to prod, batch update sets for grouping related changes, preview before commit, and specific handling of conflicts: skip, accept remote, or accept current with awareness of what each does. Strong answers mention checking for missing references before commit, exporting as XML as a backup, and the gotcha that committing an update set doesn't pull in dependencies it doesn't know about. Bonus points for mentioning scoped app considerations or branch management in Studio. Red flag if he says "I just commit it" or can't name what a preview conflict actually is.
+
+
+Reframe if he struggles: "Let's narrow it down. Say you just finished building a catalog item in dev and you need to get it to test. Walk me through what you'd actually do, step by step."
+
+
+3. When you create a UI policy versus a client script versus a business rule, how do you decide? Give me a recent example of each.
+Why third: Floor check on the CAD certification with more depth than the record producer question. Still a softball but it lets you probe his judgment lightly.
+
+What you're listening for: UI policies for declarative form behavior (show/hide, mandatory, read-only) without code when possible. Client scripts for client-side logic that UI policies can't handle, with awareness of the four types (onLoad, onChange, onSubmit, onCellEdit). Business rules for server-side logic with awareness of when (before, after, async, display) and why that matters. Real examples should be specific: "I used a UI policy to hide the manager approval field when the request type was equipment under $500." Generic answers like "UI policies are for the form and business rules are for the server" are a yellow flag for a CAD holder.
+
+
+Reframe if he struggles: "Forget the comparison. Just tell me about the last UI policy you built. What was it doing, and why did you pick a UI policy over a client script?"
+
+
+4. Walk me through the LDAP integration at Leidos. You imported around 1.3 million users. What did the coalesce strategy look like, and what was the hardest problem you had to solve?
+Why fourth: The resume credibility test. His most impressive claim, hardest to fake. By now he should be warmed up. If this answer is real, the rest of the resume is probably real. If it's vague, you read everything else differently.
+
+What you're listening for: Specific technical detail. Coalesce field choice and why, scheduled import frequency, and how he handled the manager DN translation to a sys_user reference. Critical senior tell: unprompted mention of setWorkflow(false) to suppress business rules during the import and avoid triggering 1.3 million notification emails. If he doesn't surface this on his own, ask directly: "How did you keep that import from firing every business rule 1.3 million times?" The hardest-problem answer should name a specific failure: duplicate records from coalescing on the wrong field, performance issues at scale, manager hierarchy not resolving on first pass, disabled accounts not deactivating, or transform map script errors on edge-case data. Red flag if he can't name a real failure, he was adjacent to the work.
+
+
+Reframe if he struggles: "Set aside the technical setup for a second. What was your specific role on that project? Were you driving the configuration, supporting someone else, or somewhere in between?"
+
+
+5. If a business requirement can be solved by both a business rule and a flow, which do you pick and why? Give me a specific scenario where Flow would actually be the wrong choice.
+Why fifth: Your senior-judgment probe. Tests architectural thinking. Separates juniors who reflexively pitch Flow from seniors who understand trade-offs.
+
+What you're listening for: The "Flow is the wrong choice" half is where you separate juniors from seniors. Strong answers: async business rules for high-volume database operations where you don't need Flow engine overhead, scripted approaches for complex conditional logic that would become a spaghetti Flow, or simple field updates where a Flow is overkill. Bonus for mentioning debugging overhead, instance load considerations, or technical debt implications. Red flag: "Flow is always better because it's the new way" or any answer that suggests he hasn't actually run into a case where Flow was the wrong call.
+
+
+Reframe if he struggles: "Think about a time you had to update a lot of records at once based on some condition. Would you reach for a Flow or a business rule, and why?"
+
+
+6. Tenure and overlap probe (two parts, ask gently)
+Part A: "Your dates at Meridian Link and Cap Gemini overlap in late 2021. Help me understand what that period looked like."
+Part B: "You've moved between Leidos, CACI, and Improvix in the last 18 months. What specifically did those organizations lack that made you realize they weren't the long-term fit?"
+Why sixth: Sole-admin role cannot afford a flight risk. The overlap is a legitimate question that needs surfacing, not dodged. Ask gently, not as a gotcha.
+
+What you're listening for: On Part A, you want a coherent factual explanation. Sometimes contracting roles wind down with a tail of part-time work while the next ramps. Let him explain before deciding what it means. Red flags: defensive body language, vague answers, contradictions with the resume. On Part B, the best answer names a specific technical or career reason ("they were stuck on Madrid and refused to upgrade," "role was 80 percent break-fix"). Weak answer: "It was just time to move." Even weaker: bashing previous employers. Listen for whether he takes any ownership of fit issues or whether everything is always someone else's fault.
+
+
+Reframe if he struggles: "Federal contracting moves around a lot, I get it. What are you actually looking for in your next role that you haven't found yet?"
+
+
+7. Have you ever worked on a ServiceNow instance that wasn't SaaS hosted by ServiceNow itself? Walk me through any on-prem experience you have.
+Why last: The biggest environment gap on his resume. Better to know now than after an offer. Quick to ask, high signal.
+
+What you're listening for: Honest answer first. If yes: listen for specifics like MID Server configuration, instance patching coordination with infrastructure teams, plugin installation differences, network constraints, integration with internal-only systems. If no: listen for how he frames the gap. The right answer acknowledges it, expresses genuine curiosity, and names a reasonable learning approach (docs, Community, asking the MSP, shadowing patches). Red flag: dismissing the difference as trivial, or claiming experience that doesn't hold up to one follow-up question.
+
+
+Reframe if he struggles: "No worries if it's all been SaaS. How would you approach coming up to speed on an on-prem instance? What would you want to learn first?"
+
+
+Time Plan
+
+0 to 2 min: Brief intro, set expectations
+2 to 5 min: Question 1 (record producer warm-up)
+5 to 10 min: Question 2 (update sets)
+10 to 14 min: Question 3 (UI policy vs client script vs business rule)
+14 to 20 min: Question 4 (LDAP)
+20 to 24 min: Question 5 (Flow vs business rule)
+24 to 28 min: Question 6 (tenure)
+28 to 30 min: Question 7 (on-prem) plus his questions for you
+
+Note: Seven questions is tight for 30 minutes. If he's giving long answers and you fall behind, drop question 5 or question 7. Question 5 is your best senior probe but question 7 surfaces a fit gap you really need to know about. If you have to choose, keep 7 and skip 5.
+Decision Heuristic
+Questions 1 and 3 are floor checks. If he stumbles on either of these as a CAD holder, that's a serious problem. Questions 2, 4, and 5 are where you find his ceiling. Question 6 is fit. Question 7 is environment.
+Red flag accumulation: One red flag is noise. Two is a pattern. Three means trust your gut.Opus 4.7Claude is AI and can make mistakes. Please double-check responses.
