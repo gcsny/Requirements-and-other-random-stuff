@@ -1,0 +1,113 @@
+Here's the full rewritten question bank with the 401/OAuth question added to the integrations section.
+
+Warmup Questions
+What does your typical development workflow look like from getting a requirement to deploying to production?
+Strong answer: Describes a real process. Mentions requirement gathering or refinement, building in Dev, capturing in an update set, ATF or manual testing, moving through Test and any other environments, peer code review, and Production deployment. Bonus if he mentions documentation or rollback planning.
+Weak answer: Vague or skips entire steps like testing or code review.
+Followup: "Where in that process do things usually go wrong?"
+What's a ServiceNow feature or pattern you see commonly overused or misused?
+Strong answer: A real opinion with reasoning. Common good answers include over-customization instead of configuration, business rules firing on every update, scripted approvals that should be configuration based, building custom when OOB would work, or treating every problem as a flow.
+Weak answer: Can't name anything, or gives a generic non-answer.
+Reframe if he stumbles: "What's something you've seen another developer do that made you cringe?"
+Tell me about the trickiest bug you've debugged in ServiceNow. How did you find the root cause?
+Strong answer: A real war story with specifics. Mentions system logs, script debugger, background scripts, or transaction logs. Talks about why something failed, not just what they clicked.
+Weak answer: Vague, no specific tools mentioned, or describes a configuration issue rather than a real debugging session.
+Followup: "What did you change in your process after that?"
+
+Platform Fundamentals
+Walk me through a time you had to choose between Flow Designer, a Business Rule with a Script Include, and a UI Policy. What drove the decision?
+Strong answer: Real scenario with tradeoffs. Mentions maintainability, who owns the artifact long term, performance, and where ServiceNow is pushing the platform. Acknowledges Flow Designer is the strategic direction but has limits.
+Weak answer: Reflexively picks one for everything, or can't describe a specific scenario.
+Followup: "What's something Flow Designer is bad at?"
+What's the order of execution when a record is inserted? Walk me through what fires and when.
+Strong answer: Client side first (onSubmit client scripts, UI policies), then server side (before business rules, engines like workflow and approval, then after business rules, then async business rules).
+Weak answer: Mixes up client and server, can't articulate before versus after versus async business rules.
+Reframe if needed: "If I have a before business rule and an after business rule on the same table, which runs first and why does that matter?"
+You list GlideAggregate specifically. When have you used it, and what problem did it solve that a regular GlideRecord couldn't?
+Strong answer: GlideAggregate is for counts, sums, averages, group by queries. He should describe a real use case like a dashboard widget counting incidents by priority, and acknowledge that doing it with GlideRecord would mean pulling every record and counting in script, which is bad for performance.
+Weak answer: Can't articulate why GlideAggregate exists or treats it as just another GlideRecord.
+Followup: "How would you do a count of incidents grouped by assignment group, ordered by count descending?"
+
+Service Portal & UI Builder
+Walk me through one of those 1,300 line AngularJS widgets. What did it do, and why did it end up that size?
+Strong answer: He describes a specific business problem, the data flow between client controller and server script, mentions things like nested directives, multiple GlideAjax calls, complex form logic, and ideally acknowledges that 1,300 lines is large and talks about whether it should have been refactored or split.
+Weak answer: Vague on what the widget actually did, can't describe the data flow, or treats 1,300 lines as a brag rather than a tradeoff.
+Followup: "If you had time to refactor it, how would you break it up?"
+In a Service Portal widget, how does data move between the server script and the client controller? When would you use GlideAjax instead?
+Strong answer: Server script populates the data object, client controller accesses it via c.data. GlideAjax is for asynchronous calls back to the server after the widget loads, like when a user changes a field and you need fresh data without reloading. He should mention c.server.get() as the other option for refreshing data.
+Weak answer: Confuses client and server context, doesn't know what data and options are, or says "I'd have to look it up."
+Reframe if he stumbles: "Say a user picks a value from a dropdown and you need to pull related records based on that. How do you wire that up?"
+You list both Service Portal and UI Builder as expert level. If you were starting a new portal project tomorrow, which would you pick and why?
+Strong answer: He acknowledges UI Builder is the platform direction and where ServiceNow is investing, but talks about tradeoffs like maturity, available components, team skillset, and what the actual use case is. A real expert won't say "always UI Builder."
+Weak answer: Picks one with no reasoning, or doesn't know UI Builder is replacing Service Portal as the strategic direction.
+Followup: "What's something UI Builder still can't do well that Service Portal can?"
+
+Integrations
+Walk me through the Treasury MuleSoft REST integration. How did the auth work, where did credentials live, and how did you handle errors?
+Strong answer: Describes the OAuth profile setup in ServiceNow, where the credential record lives, how tokens refresh, the REST message configuration, and concrete error handling like retry logic, logging to a custom table, or notifications on failure.
+Weak answer: Hand-wavy on the auth flow, can't describe where credentials are stored, or talks about it like he watched someone else build it.
+Followup: "What happened the first time it broke in production?"
+You mention the Treasury MuleSoft REST integration used OAuth/JWT. Say you're testing it and you start getting 401 errors back. What does that tell you and how do you troubleshoot?
+Strong answer: Knows 401 is Unauthorized. Walks through the likely causes: token expired and didn't refresh, OAuth profile misconfigured, client ID or secret wrong, JWT signature failing, system clock skew on JWT exp claim, scope mismatch, or the Authorization header not being sent correctly. Talks about checking the outbound REST message log, looking at the actual request headers, and validating the token. Bonus if he mentions clock skew unprompted, that's a strong signal he's actually done this work.
+Weak answer: Doesn't know what 401 means, confuses it with 403 (Forbidden) or 404, or jumps straight to "I'd check the credentials" without a structured approach.
+Followup: "What's the difference between a 401 and a 403?"
+What's the difference between OAuth and JWT in a ServiceNow outbound REST context?
+Strong answer: OAuth is an auth framework, JWT is a token format. OAuth 2.0 can use JWT as the bearer token. In ServiceNow you'd configure an OAuth profile with grant type, and JWT specifically might be used for JWT bearer grant flow where you sign assertions with a private key. Bonus if he mentions where the private key lives in ServiceNow (Certificates table or JWT Provider record).
+Weak answer: Treats them as interchangeable or can't articulate the relationship.
+Reframe: "When you set up the OAuth profile in ServiceNow, what fields did you have to fill in?"
+You list both REST and SOAP. Tell me about a SOAP integration you actually built.
+Strong answer: Describes a real legacy system integration, mentions WSDL, talks about how SOAP differs in ServiceNow (SOAP message records versus REST message records), and acknowledges SOAP is mostly legacy now.
+Weak answer: Can't name a specific SOAP integration, or describes it identically to REST.
+Followup: "Why was that system SOAP instead of REST?"
+You list Integration Hub. When would you use Integration Hub versus writing a REST message and Script Include yourself?
+Strong answer: Integration Hub is good for reusable spoke based integrations and Flow Designer compatibility, but it requires licensing and can be overkill for simple one-off calls. A custom REST message with a Script Include gives you more control and doesn't burn transactions.
+Weak answer: Doesn't know Integration Hub is licensed separately, or always picks one without tradeoffs.
+
+CMDB
+Explain IRE in your own words. What problem does it solve?
+Strong answer: Identification and Reconciliation Engine. It prevents duplicate CIs by using identification rules to match incoming data against existing CIs, and reconciliation rules to decide which data source wins when multiple sources report different values for the same field.
+Weak answer: Knows the acronym but can't describe what it actually does, or only talks about one half (identification or reconciliation).
+Followup: "What happens when Discovery and an import set both try to update the same CI field?"
+You mention CSDM alignment. What's CSDM and how have you applied it in practice?
+Strong answer: Common Service Data Model. ServiceNow's reference framework for how CMDB data should be structured across foundation, design, technical service, and service offering layers. He should describe a real example of aligning CIs to CSDM categories.
+Weak answer: Knows the acronym but can't describe the four layers or how it actually affects CMDB design.
+You list CI class configuration for a 4,500 site environment. How do you decide between extending an existing CI class versus creating a new one?
+Strong answer: Default is to extend, not create new. Create new only when no existing class fits and the new class has distinct attributes and relationships. Mentions impact on Discovery, Service Mapping, and reporting.
+Weak answer: Creates new classes liberally or can't articulate the tradeoff.
+
+Scoped Apps
+You list two scoped applications at DLA. Walk me through one of them. What did it do, and why did it need to be a scoped app rather than configuring an existing module?
+Strong answer: Describes the business problem, why an OOB module didn't fit, and demonstrates understanding of scope isolation, cross-scope access, and application file management.
+Weak answer: Can't articulate why it needed to be scoped versus global, or describes work that sounds like configuration rather than app development.
+Followup: "How did you handle cross-scope access when your scoped app needed to read from a global table?"
+
+Now Assist & AI
+You're Now Assist for Creator certified. What did you actually build with it at DLA? Walk me through a specific skill or agent.
+Strong answer: Describes a concrete use case, the prompt engineering involved, how it was integrated into a workflow, and what governance controls were applied. Acknowledges federal constraints on AI.
+Weak answer: Talks about Now Assist generically, can't name something specific he built, or describes the certification content rather than real work.
+Followup: "What was the hardest part of getting it approved in a federal environment?"
+You also list Predictive Intelligence and Virtual Agent. Tell me about a Virtual Agent topic you built.
+Strong answer: Describes a specific topic with utterances, the conversation flow, when it hands off to a human, and how it pulls from or writes to ServiceNow records.
+Weak answer: Conflates Virtual Agent with Now Assist, or can't describe a specific topic.
+
+Scenario Questions
+Users say a catalog item submits successfully but the request never shows up in the fulfiller's queue. How do you troubleshoot?
+Strong answer: Walks through it systematically. Check if the RITM was created at all, check the catalog item's workflow or flow, check assignment rules, check the fulfiller group, check the request state and approval status. Mentions system logs and the flow execution history.
+Weak answer: Jumps to a single guess without a structured approach.
+A business rule is slowing down updates on the incident table. How do you figure out which one and what to do about it?
+Strong answer: Uses slow transaction logs, sys_script table queries to find recent BRs on incident, the script debugger, or transaction quota rules. Talks about whether the BR should be converted to async, made more conditional, or refactored.
+Weak answer: Just says "I'd disable it" without diagnostic process.
+Someone made an emergency change directly in Production over the weekend. Monday morning you find out. What do you do?
+Strong answer: Identify what changed (Update Sets > Local Update Sets, or system update sets named Default), capture it in an update set, move it back through Dev and Test for proper testing, document the incident. Doesn't get defensive or blame.
+Weak answer: Either freaks out or shrugs it off without a real recovery plan.
+
+Process & Governance
+Walk me through your update set hygiene process across Dev, Test, Training, and Production. What do you do when there's a collision?
+Strong answer: Describes a real process. Mentions previewing before commit, handling skipped records, batching update sets, and a strategy for collisions like merging or rebuilding. Acknowledges that update sets don't capture data, only configuration.
+Weak answer: Generic "we move update sets up the chain" without specifics on collision handling.
+Walk me through how you'd write an ATF test for a catalog item that triggers a flow. What would you actually validate?
+Strong answer: Describes setting up the test data, submitting the catalog item, asserting on the resulting RITM and tasks, checking that the flow executed and produced expected outcomes. Mentions impersonation and rollback.
+Weak answer: Doesn't know how ATF actually works, or treats it as just clicking through manually.
+What does WCAG 508 compliance actually look like when you're building a widget? Give me three specific things you check.
+Strong answer: Specific items like ARIA labels on interactive elements, keyboard navigation support, color contrast ratios, alt text on images, form field labels properly associated, focus indicators visible.
+Weak answer: Generic "we make it accessible" without specifics.
